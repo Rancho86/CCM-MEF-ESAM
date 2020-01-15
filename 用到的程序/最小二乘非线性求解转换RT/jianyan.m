@@ -1,4 +1,27 @@
-filesExtrin = {  'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\11.txt' };     
+filesExtrin = {
+ %   'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\1.txt'
+   'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\2.txt'
+       'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\3.txt'
+%       'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\4.txt'
+     'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\5.txt'
+      'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\6.txt'
+%    'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\7.txt'
+    'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\8.txt'
+    'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\9.txt'
+%     'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\10.txt'
+      'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\11.txt'
+%      'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\12.txt'
+%  'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\13.txt'
+    'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\14.txt'
+%      'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\15.txt'
+%      'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\16.txt'
+%   'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\17.txt'
+%    'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\18.txt'
+%      'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\19.txt'
+%      'C:\Users\sushun\Desktop\论文发表参考文章\球形标定板矫正\实验\Kinect2019-11-28\联合坐标\20.txt'
+
+    };     
+plotmat=[];
                      %相机内参矩阵
 % A = [369.975614560740,0,262.099033735702;
 % 0,369.364691829226,211.407670758059;
@@ -25,7 +48,7 @@ for i = 1 : numFiles
     % 读取x，y，z
     XYZ = load(filesExtrin{i});
     M(:, :, i) = XYZ(:, 3 : 5)';
-end
+
 u1=[];
 v1=[];
 U1=[];
@@ -36,7 +59,7 @@ Z1=[];
 Xw1=[];
 Yw1=[];
 Zw1=[];
-for i = 1 : numFiles
+%for i = 1 : numFiles
     for j = 1 : n
 u = mpic(1, j, i) ;
         v =  mpic(2, j, i) ;
@@ -64,8 +87,15 @@ u = mpic(1, j, i) ;
 %         Y1=[Y1;Y];
 %         Z1=[Z1;Z];
     end
-end
+%end
 plot(u1(:),v1(:),'ro',U1(:),V1(:),'bx')
 rms=sqrt((u1(:)-U1(:)).^2+(v1(:)-V1(:)).^2);
+maxrms=max(rms);
+minrms=min(rms);
 RMS=sum(rms(:))/20 %该图上标记点标定后平均像素误差
+chafang=sum((rms(:)-mean(rms)).^2)/length(rms);
+yerroplus=maxrms-RMS;
+yerrosub=RMS-minrms;
+plotmat(i,:)=[RMS,yerroplus,yerrosub,chafang];
+end
 % plot3(X1(:),Y1(:),Z1(:),'ro',Xw1(:),Yw1(:),Zw1(:),'bx')

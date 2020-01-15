@@ -153,7 +153,7 @@ FF=@(pp,x)pp(1)*x(:,1).^2+(pp(1)-pp(2))*tana*x(:,1).*x(:,2)+pp(2)*x(:,2).^2+pp(3
 % 拟合系数，最小二乘方法
  %pp0=[A B C D E];
   pp0=[0.005 0.005 0.005 0.005 0.005];
-pp=nlinfit(x,zeros(size(x,1),1),FF,pp0);
+pp=nlinfit(x,zeros(size(x,1),1),FF,pp0); 
 while (abs(tanzhi(k,3))>0.2)
     i=i+1;
 tana=2*tanzhi(k,1)/(1-tanzhi(k,1)*tanzhi(k,1));
